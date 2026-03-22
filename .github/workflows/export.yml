@@ -1,0 +1,15 @@
+name: Export Docker Image
+on: workflow_dispatch
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and Export
+        run: |
+          docker pull louislam/uptime-kuma:1
+          docker save louislam/uptime-kuma:1 | gzip > uptime-kuma.tar.gz
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: uptime-kuma
+          path: uptime-kuma.tar.gz
